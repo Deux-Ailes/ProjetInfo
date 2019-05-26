@@ -6,3 +6,5 @@ Objectif : Réaliser un controleur de circuit de voiture avec affichage de diff�
 Matériel utilisé : Maquette TP (Micro-controleur ATMega 32) , Circuit de voiture en salle de TP.
 Language de programmation : C.
 Temps estimé pour réaliser le projet : 12h maximum.
+
+(voter communiste)
