@@ -51,6 +51,7 @@ volatile unsigned char	t_minute=0 ;
 volatile unsigned char	t_centi=0 ;
 volatile unsigned char	t_secondes=0 ;
 volatile unsigned char nb_tour=0;
+volatile unsigned char tourmax = 11;
 int main(void)
 {
 	cli();
@@ -294,7 +295,7 @@ void ecriture_nb_tour(void)
 void affiche_temps_X(void)
 {
 	
-	if (nb_tour==10)
+	if (nb_tour==11)
 	{
 		PORTD&=~(0xC0);
 		InitLCD();
@@ -326,22 +327,21 @@ void meilleur_temps(void)
 	
 		if (lecture_capteur_fourche())
 		{
-			
+			j++;
 			Tableau_Centi [j]= t_centi;
 			Tableau_Secondes [j]= t_secondes;
 			Tableau_Minutes [j] = t_minute;
-			
 			t_minute=0;
 			t_secondes=0;
 			t_centi=0;
 			
-			j++;
+			
 		}
 	
 		
-	if (nb_tour==10)
+	if (nb_tour==tourmax)	
 	{	
-	for (int i=0; i<9;i++)	//Détermination du meillleur temps
+	for (int i=0; i<tourmax;i++)	//Détermination du meillleur temps
 	{
 		if ((Tableau_Minutes[i]<meill_min))
 		{
@@ -351,7 +351,7 @@ void meilleur_temps(void)
 			meill_tours=i+1;
 		}
 		
-		if ((Tableau_Minutes[i]==meill_min) & (Tableau_Secondes[i]<meill_sec))
+		if ((Tableau_Minutes[i]==meill_min) && (Tableau_Secondes[i]<meill_sec))
 		{
 			meill_min=Tableau_Minutes[i];
 			meill_sec=Tableau_Secondes[i];
@@ -359,7 +359,7 @@ void meilleur_temps(void)
 			meill_tours=i+1;
 		}
 		
-		if ((Tableau_Minutes[i]==meill_min) & (Tableau_Secondes[i]==meill_sec) & (Tableau_Centi[i]<meill_centi) )
+		if ((Tableau_Minutes[i]==meill_min) && (Tableau_Secondes[i]==meill_sec) && (Tableau_Centi[i]<meill_centi) )
 		{
 			meill_min=Tableau_Minutes[i];
 			meill_sec=Tableau_Secondes[i];
@@ -372,10 +372,10 @@ void meilleur_temps(void)
 	
 		PORTD&=~(0xC0);
 		InitLCD();
-		
+			
 			
 			AffPrecis(0,0);
-			printf("%cBest n%d, %d'%d''%d %c",0xA2,meill_tours,meill_min,meill_sec,meill_centi,0x00);
+			printf("%cBest:n%d;%d'%d''%d %c",0xA2,meill_tours,Tableau_Minutes[meill_tours-1],Tableau_Secondes[meill_tours-1],Tableau_Centi[meill_tours-1],0x00);
 			
 			unsigned char minutes=minute;
 			unsigned char secondes=seconde;
