@@ -7,4 +7,4 @@ Matériel utilisé : Maquette TP (Micro-controleur ATMega 32) , Circuit de voitu
 Language de programmation : C.
 Temps estimé pour réaliser le projet : 12h maximum.
 
-(voter communiste)
+Temps passé au total : 16h (dû aux problèmes rencontrés en phase physique de tests)
